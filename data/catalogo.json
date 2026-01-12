@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "nombre": "Camiseta Azul",
+    "precio": 15
+  },
+  {
+    "id": 2,
+    "nombre": "Pantalón Negro",
+    "precio": 30
+  },
+  {
+    "id": 3,
+    "nombre": "Zapatos Deportivos",
+    "precio": 50
+  },
+  {
+    "id": 4,
+    "nombre": "Gorra Roja",
+    "precio": 12
+  },
+  {
+    "id": 5,
+    "nombre": "Chaqueta",
+    "precio": 80
+  },
+  {
+    "id": 6,
+    "nombre": "Calcetines",
+    "precio": 5
+  },
+  {
+    "id": 7,
+    "nombre": "Mochila",
+    "precio": 40
+  },
+  {
+    "id": 8,
+    "nombre": "Cinturón",
+    "precio": 20
+  },
+  {
+    "id": 9,
+    "nombre": "Sudadera",
+    "precio": 35
+  },
+  {
+    "id": 10,
+    "nombre": "Pijama",
+    "precio": 25
+  }
+]
