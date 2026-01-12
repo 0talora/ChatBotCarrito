@@ -2,98 +2,134 @@ from langgraph.graph import StateGraph, END
 from models.producto import Producto
 from models.carrito import Carrito
 import json
+from typing import TypedDict
 
 # --- Cargar catálogo ---
-with open("data/catalogo.json", "r") as f:
+with open("data/catalogo.json", "r", encoding="utf-8") as f:
     CATALOGO = [Producto(**p) for p in json.load(f)]
 
-# --- Estado global ---
-class State:
-    def __init__(self):
-        self.carrito = Carrito()
-        self.usuario = None
-        self.estado = "inicio"
+# --- Estado inicial ---
+def estado_inicial():
+    return {
+        "carrito": {},       # Aquí guardaremos {producto_id: {"producto": Producto, "cantidad": int}}
+        "step": "inicio",
+        "user_data": {}      # Para datos de usuario como nombre y ciudad
+    }
 
 # --- Nodos ---
 def nodo_inicio(state):
     print("👋 ¡Bienvenido a la tienda virtual!")
-    return "ver_catalogo"
+    state["step"] = "ver_catalogo"
+    return state
 
 def nodo_ver_catalogo(state):
     print("\n📦 Catálogo de productos:")
     for p in CATALOGO:
         print(f"{p.id}. {p.nombre} - {p.precio}€")
     accion = input("Añadir / Ver carrito / Finalizar / Salir: ").lower()
-    if "añadir" in accion: return "editar_carrito"
-    elif "carrito" in accion: return "mostrar_carrito"
-    elif "finalizar" in accion: return "confirmar_compra"
-    elif "salir" in accion: return END
-    return "ver_catalogo"
+    if "añadir" in accion:
+        state["step"] = "editar_carrito"
+    elif "carrito" in accion:
+        state["step"] = "mostrar_carrito"
+    elif "finalizar" in accion:
+        state["step"] = "confirmar_compra"
+    elif "salir" in accion:
+        state["step"] = "salir"
+    else:
+        print("❓ No te entendí")
+        state["step"] = "ver_catalogo"
+    return state
 
 def nodo_editar_carrito(state):
     try:
         pid = int(input("ID del producto: "))
         cantidad = int(input("Cantidad: "))
         producto = next((p for p in CATALOGO if p.id == pid), None)
-        if producto:
-            state.carrito.agregar(producto, cantidad)
+        if producto and cantidad > 0:
+            carrito = Carrito()
+            carrito.items = state["carrito"]
+            carrito.agregar(producto, cantidad)
+            state["carrito"] = carrito.items
             print(f"✅ Añadido {cantidad}x {producto.nombre}")
         else:
-            print("❌ Producto no encontrado")
+            print("❌ Producto o cantidad inválidos")
     except ValueError:
         print("❌ Datos inválidos")
-    return "ver_catalogo"
+    state["step"] = "ver_catalogo"
+    return state
 
 def nodo_mostrar_carrito(state):
-    print(state.carrito.listar())
-    accion = input("Quitar / Modificar / Finalizar / Salir: ").lower()
-    if "quitar" in accion: return "quitar_carrito"
-    elif "modificar" in accion: return "modificar_carrito"
-    elif "finalizar" in accion: return "confirmar_compra"
-    elif "salir" in accion: return END
-    return "ver_catalogo"
+    carrito = Carrito()
+    carrito.items = state["carrito"]
+    print(carrito.listar())
+    accion = input("Quitar / Modificar / Finalizar / Volver: ").lower()
+    if "quitar" in accion:
+        state["step"] = "quitar_carrito"
+    elif "modificar" in accion:
+        state["step"] = "modificar_carrito"
+    elif "finalizar" in accion:
+        state["step"] = "confirmar_compra"
+    else:
+        state["step"] = "ver_catalogo"
+    return state
 
 def nodo_quitar_carrito(state):
+    carrito = Carrito()
+    carrito.items = state["carrito"]
     try:
         pid = int(input("ID del producto a quitar: "))
-        state.carrito.quitar(pid)
+        carrito.quitar(pid)
+        state["carrito"] = carrito.items
         print("🗑️ Producto eliminado")
     except ValueError:
         print("❌ ID inválido")
-    return "mostrar_carrito"
+    state["step"] = "mostrar_carrito"
+    return state
 
 def nodo_modificar_carrito(state):
+    carrito = Carrito()
+    carrito.items = state["carrito"]
     try:
         pid = int(input("ID del producto a modificar: "))
         cantidad = int(input("Nueva cantidad: "))
-        state.carrito.modificar(pid, cantidad)
+        carrito.modificar(pid, cantidad)
+        state["carrito"] = carrito.items
         print("🔁 Cantidad actualizada")
     except ValueError:
         print("❌ Datos inválidos")
-    return "mostrar_carrito"
+    state["step"] = "mostrar_carrito"
+    return state
 
 def nodo_confirmar_compra(state):
-    print(state.carrito.listar())
-    if input("Confirmar compra? (s/n): ").lower() == "s":
-        return "datos_envio"
-    return "ver_catalogo"
+    carrito = Carrito()
+    carrito.items = state["carrito"]
+    print(carrito.listar())
+    if input("¿Confirmar compra? (s/n): ").lower() == "s":
+        state["step"] = "datos_envio"
+    else:
+        state["step"] = "ver_catalogo"
+    return state
 
 def nodo_datos_envio(state):
     nombre = input("Tu nombre: ")
     ciudad = input("Ciudad de envío: ")
     print(f"✅ Pedido enviado a {ciudad}, gracias {nombre}!")
-    return END
+    state["user_data"]["nombre"] = nombre
+    state["user_data"]["ciudad"] = ciudad
+    state["step"] = "salir"
+    return state
+
+# --- Definir schema del estado ---
+class StateSchema(TypedDict):
+    carrito: dict
+    step: str
+    user_data: dict
 
 # --- Crear grafo ---
 def crear_grafo():
-    state_schema = {
-        "carrito": dict,
-        "usuario": (str, type(None)),
-        "estado": str
-    }
+    graph = StateGraph(state_schema=StateSchema)
 
-    graph = StateGraph(state_schema=state_schema)
-
+    # Añadir nodos
     graph.add_node("inicio", nodo_inicio)
     graph.add_node("ver_catalogo", nodo_ver_catalogo)
     graph.add_node("editar_carrito", nodo_editar_carrito)
@@ -102,7 +138,33 @@ def crear_grafo():
     graph.add_node("modificar_carrito", nodo_modificar_carrito)
     graph.add_node("confirmar_compra", nodo_confirmar_compra)
     graph.add_node("datos_envio", nodo_datos_envio)
-    graph.set_entry_point("inicio")
-    
-    return graph
 
+    # Punto de entrada
+    graph.set_entry_point("inicio")
+
+    # Añadir transiciones basadas en "step"
+    steps = [
+        "inicio", "ver_catalogo", "editar_carrito", "mostrar_carrito",
+        "quitar_carrito", "modificar_carrito", "confirmar_compra",
+        "datos_envio"
+    ]
+
+    for n in steps:
+        graph.add_conditional_edges(
+            n,
+            lambda s: s["step"],
+            {
+                "inicio": "inicio",
+                "ver_catalogo": "ver_catalogo",
+                "editar_carrito": "editar_carrito",
+                "mostrar_carrito": "mostrar_carrito",
+                "quitar_carrito": "quitar_carrito",
+                "modificar_carrito": "modificar_carrito",
+                "confirmar_compra": "confirmar_compra",
+                "datos_envio": "datos_envio",
+                "salir": END
+            }
+        )
+
+    # Compilar grafo
+    return graph.compile()

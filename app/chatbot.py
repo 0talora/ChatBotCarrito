@@ -1,10 +1,10 @@
-from graph.conversation_graph import crear_grafo, State
+from graph.conversation_graph import crear_grafo, estado_inicial
 
 class Chatbot:
     def __init__(self):
-        self.state = State()
         self.graph = crear_grafo()
+        self.state = estado_inicial()
 
     def run(self):
         print("=== Chatbot Tienda Virtual ===")
-        self.graph.run(self.state)
+        self.graph.invoke(self.state)
