@@ -48,5 +48,40 @@
     "id": 10,
     "nombre": "Pijama",
     "precio": 25
+  },
+  {
+    "id": 11,
+    "nombre": "Bufanda",
+    "precio": 18
+  },
+  {
+    "id": 12,
+    "nombre": "Guantes",
+    "precio": 10
+  },
+  {
+    "id": 13,
+    "nombre": "Zapatos de Vestir",
+    "precio": 60
+  },
+  {
+    "id": 14,
+    "nombre": "Chaqueta Impermeable",
+    "precio": 90
+  },
+  {
+    "id": 15,
+    "nombre": "Sombrero",
+    "precio": 22
+  },
+  {
+    "id": 16,
+    "nombre": "Cartera",
+    "precio": 35
+  },
+  {
+    "id": 17,
+    "nombre": "Sudadera con Capucha",
+    "precio": 40
   }
 ]
