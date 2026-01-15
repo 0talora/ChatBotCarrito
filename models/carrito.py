@@ -1,6 +1,7 @@
+#esta clase representa el carro de compras
 class Carrito:
   def __init__(self):
-    self.items = {}
+    self.items = {}#diccionario con los productos añadidos
 
   def agregar(self, producto, cantidad):
     if cantidad <= 0:

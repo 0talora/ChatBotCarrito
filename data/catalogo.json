@@ -2,86 +2,137 @@
   {
     "id": 1,
     "nombre": "Camiseta Azul",
-    "precio": 15
+    "precio": 15,
+    "stock": 20,
+    "descripcion": "Camiseta de algodón azul, cómoda y transpirable para uso diario.",
+    "categoria": "Ropa"
   },
   {
     "id": 2,
     "nombre": "Pantalón Negro",
-    "precio": 30
+    "precio": 30,
+    "stock": 20,
+    "descripcion": "Pantalón negro clásico, ideal para uso casual o formal.",
+    "categoria": "Ropa"
   },
   {
     "id": 3,
     "nombre": "Zapatos Deportivos",
-    "precio": 50
+    "precio": 50,
+    "stock": 20,
+    "descripcion": "Zapatillas deportivas ligeras, perfectas para entrenar o caminar.",
+    "categoria": "Calzado"
   },
   {
     "id": 4,
     "nombre": "Gorra Roja",
-    "precio": 12
+    "precio": 12,
+    "stock": 20,
+    "descripcion": "Gorra roja ajustable para protegerte del sol con estilo.",
+    "categoria": "Accesorios"
   },
   {
     "id": 5,
     "nombre": "Chaqueta",
-    "precio": 80
+    "precio": 80,
+    "stock": 20,
+    "descripcion": "Chaqueta resistente y abrigada, ideal para días fríos.",
+    "categoria": "Ropa"
   },
   {
     "id": 6,
     "nombre": "Calcetines",
-    "precio": 5
+    "precio": 5,
+    "stock": 20,
+    "descripcion": "Calcetines suaves y cómodos, adecuados para uso diario.",
+    "categoria": "Ropa"
   },
   {
     "id": 7,
     "nombre": "Mochila",
-    "precio": 40
+    "precio": 40,
+    "stock": 20,
+    "descripcion": "Mochila espaciosa con varios compartimentos para el día a día.",
+    "categoria": "Accesorios"
   },
   {
     "id": 8,
     "nombre": "Cinturón",
-    "precio": 20
+    "precio": 20,
+    "stock": 20,
+    "descripcion": "Cinturón resistente de material sintético, diseño elegante.",
+    "categoria": "Accesorios"
   },
   {
     "id": 9,
     "nombre": "Sudadera",
-    "precio": 35
+    "precio": 35,
+    "stock": 20,
+    "descripcion": "Sudadera cómoda y cálida, perfecta para un look casual.",
+    "categoria": "Ropa"
   },
   {
     "id": 10,
     "nombre": "Pijama",
-    "precio": 25
+    "precio": 25,
+    "stock": 20,
+    "descripcion": "Pijama suave y ligero para un descanso confortable.",
+    "categoria": "Ropa"
   },
   {
     "id": 11,
     "nombre": "Bufanda",
-    "precio": 18
+    "precio": 18,
+    "stock": 20,
+    "descripcion": "Bufanda de tejido suave que aporta calor y estilo.",
+    "categoria": "Accesorios"
   },
   {
     "id": 12,
     "nombre": "Guantes",
-    "precio": 10
+    "precio": 10,
+    "stock": 20,
+    "descripcion": "Guantes cómodos para proteger las manos del frío.",
+    "categoria": "Accesorios"
   },
   {
     "id": 13,
     "nombre": "Zapatos de Vestir",
-    "precio": 60
+    "precio": 60,
+    "stock": 20,
+    "descripcion": "Zapatos elegantes ideales para ocasiones formales.",
+    "categoria": "Calzado"
   },
   {
     "id": 14,
     "nombre": "Chaqueta Impermeable",
-    "precio": 90
+    "precio": 90,
+    "stock": 20,
+    "descripcion": "Chaqueta impermeable que protege de la lluvia y el viento.",
+    "categoria": "Ropa"
   },
   {
     "id": 15,
     "nombre": "Sombrero",
-    "precio": 22
+    "precio": 22,
+    "stock": 20,
+    "descripcion": "Sombrero ligero y cómodo para protegerte del sol.",
+    "categoria": "Accesorios"
   },
   {
     "id": 16,
     "nombre": "Cartera",
-    "precio": 35
+    "precio": 35,
+    "stock": 20,
+    "descripcion": "Cartera compacta con espacio para tarjetas y billetes.",
+    "categoria": "Accesorios"
   },
   {
     "id": 17,
     "nombre": "Sudadera con Capucha",
-    "precio": 40
+    "precio": 40,
+    "stock": 20,
+    "descripcion": "Sudadera con capucha, cómoda y moderna para uso diario.",
+    "categoria": "Ropa"
   }
 ]
